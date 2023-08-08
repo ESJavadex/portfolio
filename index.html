@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mi Menú Semanal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Mi Menú Semanal</h1>
+        <table>
+            <!-- Tabla del menú -->
+            <thead>
+                <tr>
+                    <th>Día</th>
+                    <th>Desayuno</th>
+                    <th>Comida</th>
+                    <th>Cena</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in menu.iterrows() %}
+                    <tr>
+                        <td>{{ row[1]['Día'] }}</td>
+                        <td>{{ row[1]['Desayuno'] }}</td>
+                        <td>{{ row[1]['Comida'] }}</td>
+                        <td>{{ row[1]['Cena'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Lista de la compra -->
+        <div class="shopping-list">
+            <h2>Lista de la Compra</h2>
+            <ul id="shopping-list">
+                {% for item in shopping_list %}
+                    <li>
+                        <input type="text" name="shopping_list" value="{{ item }}">
+                        <button class="remove-item">Eliminar</button>
+                    </li>
+                {% endfor %}
+            </ul>
+            <button id="add-item">Añadir Producto</button>
+            <input type="submit" value="Guardar Lista de Compra" form="shopping-form">
+        </div>
+
+        <form id="shopping-form" method="POST" style="display:none;">
+            <!-- Hidden form to submit the shopping list -->
+            {% for item in shopping_list %}
+                <input type="hidden" name="shopping_list" value="{{ item }}">
+            {% endfor %}
+        </form>
